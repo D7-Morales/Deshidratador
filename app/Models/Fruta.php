@@ -27,15 +27,15 @@ class Fruta extends Model
     ];
 
     /**
-     * Get the dehydration loads for this fruit.
+     * Get the dehydration processes for this fruit.
      */
-    public function cargas(): HasMany
+    public function procesos(): HasMany
     {
-        return $this->hasMany(CargaFruta::class, 'id_fruta', 'id_fruta');
+        return $this->hasMany(ProcesoDeshidratacion::class, 'id_fruta', 'id_fruta');
     }
 
     /**
-     * Scope para buscar frutas por nombre (opcional pero útil).
+     * Scope to search fruits by name.
      */
     public function scopeBuscar($query, $nombre)
     {
@@ -43,7 +43,7 @@ class Fruta extends Model
     }
 
     /**
-     * Obtener tiempo estimado formateado (opcional).
+     * Get formatted estimated time.
      */
     public function getTiempoEstimadoFormateadoAttribute(): string
     {

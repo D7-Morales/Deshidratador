@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class CargaFruta extends Model
+class ProcesoDeshidratacion extends Model
 {
-    protected $table = 'cargas_fruta';
-    protected $primaryKey = 'id_carga';
+    protected $table = 'procesos_deshidratacion';
+    protected $primaryKey = 'id_proceso';
 
     protected $fillable = [
         'numero_lote',
@@ -38,7 +38,7 @@ class CargaFruta extends Model
     ];
 
     /**
-     * Get the fruit associated with the load.
+     * Get the fruit associated with the process.
      */
     public function fruta(): BelongsTo
     {
@@ -46,7 +46,7 @@ class CargaFruta extends Model
     }
 
     /**
-     * Get the user who managed the load.
+     * Get the user who managed the process.
      */
     public function usuario(): BelongsTo
     {
@@ -54,7 +54,7 @@ class CargaFruta extends Model
     }
 
     /**
-     * Get the dehydrator associated with the load.
+     * Get the dehydrator associated with the process.
      */
     public function deshidratador(): BelongsTo
     {
@@ -62,34 +62,18 @@ class CargaFruta extends Model
     }
 
     /**
-     * Get readings for this load.
+     * Get readings for this process.
      */
     public function lecturas(): HasMany
     {
-        return $this->hasMany(LecturaSensor::class, 'id_carga', 'id_carga');
+        return $this->hasMany(LecturaSensor::class, 'id_proceso', 'id_proceso');
     }
 
     /**
-     * Get commands executed during this load.
-     */
-    public function comandos(): HasMany
-    {
-        return $this->hasMany(ComandoControl::class, 'id_carga', 'id_carga');
-    }
-
-    /**
-     * Get automation rules for this load.
-     */
-    public function automatizaciones(): HasMany
-    {
-        return $this->hasMany(Automatizacion::class, 'id_carga', 'id_carga');
-    }
-
-    /**
-     * Get alerts for this load (si tienes tabla alertas).
+     * Get alerts for this process.
      */
     public function alertas(): HasMany
     {
-        return $this->hasMany(Alerta::class, 'id_carga', 'id_carga');
+        return $this->hasMany(Alerta::class, 'id_proceso', 'id_proceso');
     }
 }

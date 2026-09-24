@@ -9,7 +9,7 @@
         <div class="card shadow-sm border-0" style="border-radius: 16px;">
             <div class="card-header bg-transparent border-bottom d-flex justify-content-between align-items-center flex-wrap pt-4 px-4">
                 <h3 class="card-title text-lg font-weight-bold text-dark mb-0">
-                    <i class="fas fa-spinner text-warning mr-2"></i>Monitoreo de Procesos (Cargas de Fruta)
+                    <i class="fas fa-spinner text-warning mr-2"></i>Monitoreo de Procesos
                 </h3>
                 <a href="{{ route('procesos.create') }}" class="btn btn-warning text-white font-weight-bold px-3 py-2" style="border-radius: 30px;">
                     <i class="fas fa-play mr-1"></i> Iniciar Nuevo Proceso
@@ -36,7 +36,7 @@
                     <tbody>
                         @forelse($procesos as $proceso)
                             <tr>
-                                <td class="font-weight-bold text-muted">#{{ $proceso->id_carga }}</td>
+                                <td class="font-weight-bold text-muted">#{{ $proceso->id_proceso }}</td>
                                 <td class="font-weight-bold"><code>{{ $proceso->numero_lote ?? 'N/A' }}</code></td>
                                 <td class="font-weight-bold text-dark">{{ $proceso->fruta->nombre_fruta ?? 'N/A' }}</td>
                                 <td>{{ $proceso->deshidratador->nombre ?? 'N/A' }}</td>
@@ -48,7 +48,7 @@
                                         </span>
                                     @elseif(strtolower($proceso->estado_proceso) === 'completado')
                                         <span class="badge badge-success px-3 py-2 font-weight-bold text-white" style="border-radius: 20px;">
-                                            <i class="fas fa-check-circle mr-1"></i> COMPLETADO
+                                            <i class="fas fa-circle mr-1"></i> COMPLETADO
                                         </span>
                                     @elseif(strtolower($proceso->estado_proceso) === 'pendiente')
                                         <span class="badge badge-info px-3 py-2 font-weight-bold" style="border-radius: 20px;">
@@ -83,11 +83,11 @@
                                 <td class="py-2">
                                     <div class="btn-group btn-group-sm">
                                         @if(strtolower($proceso->estado_proceso) === 'activo')
-                                            <a href="{{ route('procesos.edit', $proceso->id_carga) }}" class="btn btn-success font-weight-bold mr-1" title="Finalizar Proceso">
+                                            <a href="{{ route('procesos.edit', $proceso->id_proceso) }}" class="btn btn-success font-weight-bold mr-1" title="Finalizar Proceso">
                                                 <i class="fas fa-check mr-1"></i> Finalizar
                                             </a>
                                         @endif
-                                        <form action="{{ route('procesos.destroy', $proceso->id_carga) }}" method="POST" onsubmit="return confirm('¿Está seguro de eliminar el registro de este proceso?');">
+                                        <form action="{{ route('procesos.destroy', $proceso->id_proceso) }}" method="POST" onsubmit="return confirm('¿Está seguro de eliminar el registro de este proceso?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger" title="Eliminar">

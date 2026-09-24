@@ -9,11 +9,11 @@
         <div class="card shadow-sm border-0" style="border-radius: 16px;">
             <div class="card-header bg-transparent border-bottom pt-4 px-4">
                 <h3 class="card-title font-weight-bold text-dark mb-0">
-                    <i class="fas fa-check-circle text-success mr-2"></i>Completar Ciclo: #{{ $proceso->id_carga }}
+                    <i class="fas fa-check-circle text-success mr-2"></i>Completar Ciclo: #{{ $proceso->id_proceso }}
                 </h3>
             </div>
             <!-- /.card-header -->
-            <form action="{{ route('procesos.update', $proceso->id_carga) }}" method="POST">
+            <form action="{{ route('procesos.update', $proceso->id_proceso) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="card-body px-4 py-4">

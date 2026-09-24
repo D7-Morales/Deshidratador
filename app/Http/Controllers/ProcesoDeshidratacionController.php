@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CargaFruta;
+use App\Models\ProcesoDeshidratacion;
 use App\Models\Fruta;
 use App\Models\Deshidratador;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-class ProcesoController extends Controller
+class ProcesoDeshidratacionController extends Controller
 {
     /**
      * Display a listing of the processes.
      */
     public function index()
     {
-        $procesos = CargaFruta::with(['fruta', 'deshidratador'])
-            ->orderBy('id_carga', 'desc')
+        $procesos = ProcesoDeshidratacion::with(['fruta', 'deshidratador'])
+            ->orderBy('id_proceso', 'desc')
             ->paginate(15);
         return view('procesos.index', compact('procesos'));
     }
@@ -62,10 +62,10 @@ class ProcesoController extends Controller
         // Convert weight to grams
         $pesoInicialGramos = $request->peso_inicial * 1000;
 
-        CargaFruta::create([
+        ProcesoDeshidratacion::create([
             'numero_lote' => $numeroLote,
             'id_fruta' => $request->id_fruta,
-            'id_usuario' => session('id_usuario'),
+            'id_usuario' => session('id_usuario') ?? 1, // Fallback to user 1 if not in session
             'id_deshidratador' => $request->id_deshidratador,
             'cantidad_frutas' => $request->cantidad_frutas,
             'bandeja' => $request->bandeja,
@@ -75,7 +75,7 @@ class ProcesoController extends Controller
             'observaciones' => $request->observaciones,
         ]);
 
-        return redirect()->route('procesos.index')->with('success', 'Carga de fruta iniciada correctamente. Lote: ' . $numeroLote);
+        return redirect()->route('procesos.index')->with('success', 'Proceso de deshidratación iniciado correctamente. Lote: ' . $numeroLote);
     }
 
     /**
@@ -83,7 +83,7 @@ class ProcesoController extends Controller
      */
     public function edit($id)
     {
-        $proceso = CargaFruta::with(['fruta', 'deshidratador'])->findOrFail($id);
+        $proceso = ProcesoDeshidratacion::with(['fruta', 'deshidratador'])->findOrFail($id);
         
         if (strtolower($proceso->estado_proceso) === 'completado') {
             return redirect()->route('procesos.index')->withErrors(['error' => 'Este proceso ya ha sido finalizado.']);
@@ -97,7 +97,7 @@ class ProcesoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $proceso = CargaFruta::findOrFail($id);
+        $proceso = ProcesoDeshidratacion::findOrFail($id);
 
         if (strtolower($proceso->estado_proceso) === 'completado') {
             return redirect()->route('procesos.index')->withErrors(['error' => 'Este proceso ya ha sido finalizado.']);
@@ -132,7 +132,7 @@ class ProcesoController extends Controller
             'estado_proceso' => 'completado',
         ]);
 
-        return redirect()->route('procesos.index')->with('success', 'Carga de fruta completada y registrada con éxito.');
+        return redirect()->route('procesos.index')->with('success', 'Proceso de deshidratación completado y registrado con éxito.');
     }
 
     /**
@@ -140,7 +140,7 @@ class ProcesoController extends Controller
      */
     public function destroy($id)
     {
-        $proceso = CargaFruta::findOrFail($id);
+        $proceso = ProcesoDeshidratacion::findOrFail($id);
         $proceso->delete();
 
         return redirect()->route('procesos.index')->with('success', 'Registro de proceso eliminado correctamente.');

@@ -3,38 +3,44 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ComandoControl extends Model
 {
     protected $table = 'comandos_control';
+    
+    // ✅ FORZAR a Laravel a usar esta columna como clave primaria
     protected $primaryKey = 'id_comando';
+    
+    // ✅ Decirle explícitamente que es auto-incremental y de tipo entero
+    public $incrementing = true;
+    protected $keyType = 'int';
 
+    // ✅ CORREGIDO: 'estado' en lugar de 'estado_ejecucion'
     protected $fillable = [
         'id_dispositivo',
         'id_usuario',
-        'id_carga',
+        'id_proceso',
         'accion',
         'origen',
-        'estado_ejecucion',
+        'estado', 
         'fecha_envio',
-        'fecha_respuesta'
+        'fecha_respuesta',
+        'fecha_ejecucion'
     ];
 
-    // Relación con Dispositivo
-    public function dispositivo()
+    public function dispositivo(): BelongsTo
     {
         return $this->belongsTo(DispositivoControl::class, 'id_dispositivo', 'id_dispositivo');
     }
 
-    // Relación con Usuario
-    public function usuario()
+    public function usuario(): BelongsTo
     {
         return $this->belongsTo(Usuario::class, 'id_usuario', 'id_usuario');
     }
 
-    // Relación con CargaFruta
-    public function carga()
+    public function proceso(): BelongsTo
     {
-        return $this->belongsTo(CargaFruta::class, 'id_carga', 'id_carga');
+        return $this->belongsTo(ProcesoDeshidratacion::class, 'id_proceso', 'id_proceso');
     }
 }

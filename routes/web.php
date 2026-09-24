@@ -4,7 +4,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\FrutaController;
-use App\Http\Controllers\ProcesoController;
+use App\Http\Controllers\ProcesoDeshidratacionController;
 use Illuminate\Support\Facades\Route;
 
 // Public Routes
@@ -31,12 +31,12 @@ Route::middleware(['auth.manual'])->group(function () {
 
     // Dehydration Processes CRUD/Flow
     Route::prefix('procesos')->name('procesos.')->group(function () {
-        Route::get('/', [ProcesoController::class, 'index'])->name('index');
-        Route::get('/iniciar', [ProcesoController::class, 'create'])->name('create');
-        Route::post('/', [ProcesoController::class, 'store'])->name('store');
-        Route::get('/{id}/finalizar', [ProcesoController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [ProcesoController::class, 'update'])->name('update');
-        Route::delete('/{id}', [ProcesoController::class, 'destroy'])->name('destroy');
+        Route::get('/', [ProcesoDeshidratacionController::class, 'index'])->name('index');
+        Route::get('/iniciar', [ProcesoDeshidratacionController::class, 'create'])->name('create');
+        Route::post('/', [ProcesoDeshidratacionController::class, 'store'])->name('store');
+        Route::get('/{id}/finalizar', [ProcesoDeshidratacionController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [ProcesoDeshidratacionController::class, 'update'])->name('update');
+        Route::delete('/{id}', [ProcesoDeshidratacionController::class, 'destroy'])->name('destroy');
     });
 
     // Logout

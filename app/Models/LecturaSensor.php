@@ -4,20 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use HasFactory;
 
 class LecturaSensor extends Model
 {
+    
     protected $table = 'lecturas_sensor';
     protected $primaryKey = 'id_lectura';
-
-    const UPDATED_AT = null;
+    public $timestamps = true;
 
     protected $fillable = [
         'id_sensor',
-        'id_carga',
+        'id_proceso',
         'temperatura',
         'humedad',
         'presion',
+         'estado_ventilador',
         'fecha_hora',
     ];
 
@@ -37,10 +39,15 @@ class LecturaSensor extends Model
     }
 
     /**
-     * Get the dehydration load associated with this reading.
+     * Get the dehydration process associated with this reading.
      */
-    public function carga(): BelongsTo
+    public function proceso(): BelongsTo
     {
-        return $this->belongsTo(CargaFruta::class, 'id_carga', 'id_carga');
+        return $this->belongsTo(ProcesoDeshidratacion::class, 'id_proceso', 'id_proceso');
+    }
+
+    public function alertas()
+    {
+        return $this->hasMany(Alerta::class, 'id_lectura', 'id_lectura');
     }
 }

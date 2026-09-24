@@ -20,21 +20,27 @@ class Deshidratador extends Model
         'fecha_registro'
     ];
 
-    // Relación con Sensores
+    /**
+     * Get the sensors associated with this dehydrator.
+     */
     public function sensores(): HasMany
     {
         return $this->hasMany(Sensor::class, 'id_deshidratador', 'id_deshidratador');
     }
 
-    // Relación con Dispositivos de Control (Ventilador, Resistencia, etc.)
+    /**
+     * Get the control devices (fan, resistor, etc.) for this dehydrator.
+     */
     public function dispositivosControl(): HasMany
     {
         return $this->hasMany(DispositivoControl::class, 'id_deshidratador', 'id_deshidratador');
     }
 
-    // Relación con Cargas/Procesos de deshidratación
-    public function cargas(): HasMany
+    /**
+     * Get the dehydration processes associated with this dehydrator.
+     */
+    public function procesos(): HasMany
     {
-        return $this->hasMany(CargaFruta::class, 'id_deshidratador', 'id_deshidratador');
+        return $this->hasMany(ProcesoDeshidratacion::class, 'id_deshidratador', 'id_deshidratador');
     }
 }

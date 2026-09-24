@@ -1,56 +1,43 @@
 <?php
 
 use App\Http\Controllers\Api\SensorApiController;
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\FrutaApiController;
-use App\Http\Controllers\Api\ProcesoApiController;
-use App\Http\Controllers\Api\DispositivoApiController;
+use App\Http\Controllers\Api\MetricasController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ComandoController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\AlertaController;
 
 /*
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider.
+|
 */
 
-// ===== RUTAS PÚBLICAS (Sin autenticación) =====
+// ===== AUTENTICACIÓN =====
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::get('/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
 
-// ===== RUTAS PROTEGIDAS (Requieren autenticación) =====
-Route::middleware('auth:sanctum')->group(function () {
-    
-    // Datos del usuario autenticado
-    Route::get('/user', function (Request $request) {
-        return $request->user()->load('rol');
-    });
-    
-    // Logout
-    Route::post('/logout', [AuthController::class, 'logout']);
-    
-    // ----- FRUTAS -----
-    Route::get('/frutas', [FrutaApiController::class, 'index']);
-    Route::get('/frutas/{id}', [FrutaApiController::class, 'show']);
-    Route::post('/frutas', [FrutaApiController::class, 'store']);
-    Route::put('/frutas/{id}', [FrutaApiController::class, 'update']);
-    Route::delete('/frutas/{id}', [FrutaApiController::class, 'destroy']);
-    
-    // ----- PROCESOS/CARGAS -----
-    Route::get('/cargas', [ProcesoApiController::class, 'index']);
-    Route::get('/cargas/{id}', [ProcesoApiController::class, 'show']);
-    Route::post('/cargas', [ProcesoApiController::class, 'store']);
-    Route::put('/cargas/{id}', [ProcesoApiController::class, 'update']);
-    Route::delete('/cargas/{id}', [ProcesoApiController::class, 'destroy']);
-    
-    // ----- SENSORES -----
-    Route::get('/sensores', [SensorApiController::class, 'index']);
-    Route::get('/sensores/{id}', [SensorApiController::class, 'show']);
-    
-    // ----- LECTURAS -----
-    Route::get('/readings/latest', [SensorApiController::class, 'latestReading']);
-    Route::get('/readings', [SensorApiController::class, 'readings']);
-    Route::post('/readings', [SensorApiController::class, 'store']);
-    
-    // ----- DISPOSITIVOS -----
-    Route::get('/dispositivos', [DispositivoApiController::class, 'index']);
-    Route::post('/comandos', [DispositivoApiController::class, 'sendCommand']);
-});
+// Public API endpoints for ESP32 and Kotlin Mobile App
+Route::post('/readings', [SensorApiController::class, 'store']);
+Route::get('/metrics', [MetricasController::class, 'getMetrics']);
+Route::get('/alerts', [MetricasController::class, 'getAlerts']);
+// ===== COMANDOS PARA ESP32 (Nuevo) =====
+Route::post('/comandos', [ComandoController::class, 'store']);
+// ===== LECTURAS DE SENSORES =====
+Route::get('/readings/latest', [App\Http\Controllers\Api\SensorApiController::class, 'getLatestReading']);
+Route::get('/readings', [App\Http\Controllers\Api\SensorApiController::class, 'getReadings']);
+// Endpoint para que el ESP32 consulte comandos pendientes
+Route::get('/comandos/pendientes', [App\Http\Controllers\Api\ComandoController::class, 'getPendientes']);
+// Endpoint para que el ESP32 marque un comando como ejecutado
+Route::put('/comandos/{id}/ejecutado', [App\Http\Controllers\Api\ComandoController::class, 'marcarEjecutado']);
+// Marcar comando como ejecutado
+Route::post('/comandos/{id}/ejecutado', [App\Http\Controllers\Api\ComandoController::class, 'marcarEjecutado']);
+// Marcar alerta como atendida
+Route::post('/alerts/{id}/atender', [App\Http\Controllers\Api\AlertaController::class, 'marcarAtendida']);
+// ===== ALERTAS =====
+Route::get('/alerts', [App\Http\Controllers\Api\MetricasController::class, 'getAlerts']);

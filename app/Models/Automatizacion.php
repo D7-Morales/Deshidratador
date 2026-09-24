@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Automatizacion extends Model
 {
@@ -10,7 +11,7 @@ class Automatizacion extends Model
     protected $primaryKey = 'id_regla';
 
     protected $fillable = [
-        'id_carga',
+        'id_proceso',
         'temperatura_umbral',
         'humedad_umbral',
         'tiempo_estimado_restante',
@@ -19,9 +20,11 @@ class Automatizacion extends Model
         'fecha_generacion'
     ];
 
-    // Relación con CargaFruta
-    public function carga()
+    /**
+     * Get the process associated with this automation rule.
+     */
+    public function proceso(): BelongsTo
     {
-        return $this->belongsTo(CargaFruta::class, 'id_carga', 'id_carga');
+        return $this->belongsTo(ProcesoDeshidratacion::class, 'id_proceso', 'id_proceso');
     }
 }

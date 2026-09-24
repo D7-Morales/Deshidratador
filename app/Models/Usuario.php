@@ -70,11 +70,11 @@ class Usuario extends Authenticatable
     }
 
     /**
-     * Get the loads managed by the user.
+     * Get the dehydration processes managed by the user.
      */
-    public function cargas(): HasMany
+    public function procesos(): HasMany
     {
-        return $this->hasMany(CargaFruta::class, 'id_usuario', 'id_usuario');
+        return $this->hasMany(ProcesoDeshidratacion::class, 'id_usuario', 'id_usuario');
     }
 
     /**

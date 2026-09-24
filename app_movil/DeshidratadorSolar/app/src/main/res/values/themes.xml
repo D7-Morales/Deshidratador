@@ -1,0 +1,37 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Tema principal de la aplicación -->
+    <style name="Theme.DeshidratadorSolar" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Colores primarios -->
+        <item name="colorPrimary">@color/olive_green</item>
+        <item name="colorPrimaryVariant">@color/olive_green_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- Colores secundarios -->
+        <item name="colorSecondary">@color/dark_gray</item>
+        <item name="colorSecondaryVariant">@color/medium_gray</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <!-- Colores de fondo -->
+        <item name="android:colorBackground">@color/beige_light</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/black_matte</item>
+
+        <!-- Colores de estado -->
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/white</item>
+
+        <!-- Barra de estado -->
+        <item name="android:statusBarColor">@color/olive_green_dark</item>
+        <item name="android:navigationBarColor">@color/olive_green_dark</item>
+    </style>
+
+    <!-- Tema para la Splash Screen (pantalla de inicio sin ActionBar) -->
+    <style name="Theme.DeshidratadorSolar.Splash" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/beige_light</item>
+        <item name="android:statusBarColor">@color/beige_light</item>
+        <item name="android:navigationBarColor">@color/beige_light</item>
+        <item name="android:windowFullscreen">false</item>
+    </style>
+
+</resources>

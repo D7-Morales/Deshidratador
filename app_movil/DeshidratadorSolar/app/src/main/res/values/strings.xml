@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Deshidratador Solar</string>
+
+    <!-- Login -->
+    <string name="login_title">Iniciar Sesión</string>
+    <string name="login_subtitle">Accede a tu cuenta</string>
+    <string name="hint_email">Correo electrónico</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="btn_login">Iniciar sesión</string>
+    <string name="remember_me">Recordarme</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="no_account">¿No tienes cuenta? Contacta al administrador</string>
+
+    <!-- Navegación -->
+    <string name="nav_inicio">Inicio</string>
+    <string name="nav_monitoreo">Monitoreo</string>
+    <string name="nav_control">Control</string>
+    <string name="nav_historial">Historial</string>
+    <string name="nav_perfil">Perfil</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">¡Hola, %s!</string>
+    <string name="dashboard_subtitle">Resumen general del sistema</string>
+    <string name="estado_actual">Estado actual</string>
+    <string name="en_funcionamiento">En funcionamiento</string>
+    <string name="temperatura">Temperatura</string>
+    <string name="humedad">Humedad</string>
+    <string name="presion">Presión</string>
+    <string name="proceso_activo">Proceso activo</string>
+    <string name="progreso">Progreso</string>
+
+    <!-- Errores -->
+    <string name="error_generico">Ocurrió un error. Intenta de nuevo.</string>
+    <string name="error_sin_internet">Sin conexión a internet</string>
+    <string name="error_credenciales">Credenciales incorrectas</string>
+</resources>
